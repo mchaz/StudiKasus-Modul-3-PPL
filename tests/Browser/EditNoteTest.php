@@ -2,50 +2,38 @@
 
 namespace Tests\Browser;
 
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class EditNoteTest extends DuskTestCase
 {
-    // use DatabaseMigrations;
-
     /**
-     * Test Create Note functionality.
+     * A Dusk test example.
      */
-    public function EditNoteTest(): void
+    public function testExample(): void
     {
-        $this->browse(function (Browser $browser): void {
-            // Login terlebih dahulu sebelum membuat note
-            $browser->visit('/login')  
-                ->type('email', 'aziiz@gmail.com')  // Mengisi email yang sudah terdaftar
-                ->type('password', 'aziiz123')  // Mengisi password yang sesuai
-                ->press('LOG IN')  // Menekan tombol login
-                ->assertPathIs('/dashboard')  // Memastikan diarahkan ke halaman dashboard
+        $this->browse(function (Browser $browser) {
+            // Login ke aplikasi
+            $browser->visit('/login') 
+            ->type('email', 'aziiz@gmail.com')//mengisi input yang memiliki atribut name email.
+            ->type('password', 'aziiz123')//mengisi input yang memiliki atribut name password.
+            ->press('LOG IN')//menekan tombol ‘LOG IN’
+            ->assertPathIs('/dashboard')//memastikan url setelah menekan tombol sebelumnya
+            ->assertSee('Dashboard')//melihat teks ‘Dashboard’
 
-            // Pergi ke halaman Notes
-                ->assertSee('Notes')
-                ->clickLink('Notes')
-                ->assertSee('Create Note')  // Memastikan tombol "Create Note" ada
-                ->clickLink('Create Note')  // Klik tombol untuk menuju halaman pembuatan note
+            //Pergi ke halaman Notes
+            ->clickLink('Notes')//menekan tautan ‘Notes’
+            ->assertPathIs('/notes')//memastikan url setelah menekan tautan sebelumnya
+            ->assertSee('Test Note')//melihat teks ‘Notes’
 
-            // Pergi ke halaman Create Note
-                ->assertPathIs('/create-note')  // Memastikan kita berada di halaman create note
-                ->assertSee('Title')  // Memastikan ada field Title
-                ->assertSee('Description')  // Memastikan ada field Description
-                ->type('title', 'My New Note2')  // Mengisi field Title
-                ->type('description', 'This is the content of my new note2.')  // Mengisi field Description
-                ->press('CREATE')  // Menekan tombol CREATE
-
-            // Pergi ke halaman Edit Notes
-                ->assertPathIs('/Notes')  // Memastikan ada link Notes
-                ->click('@edit-button')  // Mengklik tombol Edit (gunakan selector yang tepat, misal ID atau class)
-            
-                ->assertSee('Title')  // Memastikan ada field Title
-                ->assertSee('Description')  // Memastikan ada field Description
-                ->type('title', 'My revisi note')  // Mengisi field Title
-                ->type('description', 'This is the content of my new note22')  // Mengisi field Description
-                ->press('UPDATE');  // Menekan tombol CREATE
+            //Edit Note
+            ->press('@edit-1')//memastikan url setelah menekan tautan sebelumnya
+            ->assertSee('Edit Note')//melihat teks ‘Edit Note’
+            ->type('title', 'Test Note Update')//mengisi input yang memiliki atribut name title.
+            ->type('description', 'Ini updatean baru note')//mengisi input yang memiliki atribut name description.
+            ->press('UPDATE')//menekan tombol ‘Update’
+            ->assertPathIs('/notes');//memastikan url setelah menekan tombol sebelumnya
         });
     }
 }
