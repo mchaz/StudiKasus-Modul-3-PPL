@@ -16,24 +16,23 @@ class EditNoteTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             // Login ke aplikasi
             $browser->visit('/login') 
-            ->type('email', 'aziiz@gmail.com')//mengisi input yang memiliki atribut name email.
-            ->type('password', 'aziiz123')//mengisi input yang memiliki atribut name password.
-            ->press('LOG IN')//menekan tombol ‘LOG IN’
-            ->assertPathIs('/dashboard')//memastikan url setelah menekan tombol sebelumnya
-            ->assertSee('Dashboard')//melihat teks ‘Dashboard’
+            ->type('email', 'aziiz@gmail.com') //Mengisi kolom email dengan 'aziiz@gmail.com'
+            ->type('password', 'aziiz123') //Mengisi kolom password dengan 'aziiz123'
+            ->press('LOG IN') //Mengklik tombol 'LOG IN'
+            ->assertPathIs('/dashboard') //Memastikan URL setelah klik tombol adalah '/dashboard'
+            ->assertSee('Dashboard') //Memeriksa apakah teks 'Dashboard' muncul
 
-            //Pergi ke halaman Notes
-            ->clickLink('Notes')//menekan tautan ‘Notes’
-            ->assertPathIs('/notes')//memastikan url setelah menekan tautan sebelumnya
-            ->assertSee('Test Note')//melihat teks ‘Notes’
+            // Arahkan ke halaman Notes
+            ->clickLink('Notes') //Klik tautan 'Notes'
+            ->assertPathIs('/notes') //Memastikan URL setelah klik tautan adalah '/notes'
+            ->assertSee('My New Note') //Memeriksa apakah teks 'My New Note' muncul
 
-            //Edit Note
-            ->press('@edit-1')//memastikan url setelah menekan tautan sebelumnya
-            ->assertSee('Edit Note')//melihat teks ‘Edit Note’
-            ->type('title', 'Test Note Update')//mengisi input yang memiliki atribut name title.
-            ->type('description', 'Ini updatean baru note')//mengisi input yang memiliki atribut name description.
-            ->press('UPDATE')//menekan tombol ‘Update’
-            ->assertPathIs('/notes');//memastikan url setelah menekan tombol sebelumnya
+            // Melakukan Pengeditan pada Note
+            ->press('@edit-1') //Klik tombol edit untuk note dengan ID '@edit-1'
+            ->type('title', 'Test Note Update') //Mengubah kolom 'title' dengan 'Test Note Update'
+            ->type('description', 'Ini updatean baru note') //Mengubah kolom 'description' dengan 'Ini updatean baru note'
+            ->press('UPDATE'); //Klik tombol 'UPDATE' untuk menyimpan perubahan
+
         });
     }
 }
